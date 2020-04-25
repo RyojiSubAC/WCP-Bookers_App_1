@@ -1,24 +1,56 @@
-# README
+# アプリケーションを作成してみよう：基礎編
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## バージョン
+- Ruby version
+    - 2.5.7
+- Ruby on Rails version
+    - 5.2.4.1
 
-Things you may want to cover:
+## 環境構築
+- Vagrant(Mac) + VirtualBox(6.0.14)
 
-* Ruby version
+- 「vagrant-vbguest」プラグインをインストール  
+`$ vagrant plugin install vagrant-vbguest`
 
-* System dependencies
+- Vagrantfileを設置
 
-* Configuration
+- Vagrantを起動  
+`$ vagrant up`
 
-* Database creation
+- Vagrantを停止
+`$ vagrant halt`  
 
-* Database initialization
+※ マウントできないエラーが発生した場合  
 
-* How to run the test suite
+```
+「/sbin/mount.vboxsf: mounting failed with the error: No such device」
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+- 「kernel」のバージョンを確認  
+`$ rpm -qa kernel\* | sort`
 
-* Deployment instructions
+- 「kernel」のバージョンが不一致であれば、下記コマンドを実行
 
-* ...
+```
+$ vagrant ssh
+$ sudo yum -y update kernel
+$ sudo yum -y install kernel-devel kernel-headers kernel-tools kernel-tools-libs
+$ vagrant reload
+```
+- railsサーバー起動  
+`$ rails s -b 0.0.0.0`
+
+- 動作確認URL
+    - http://localhost:3000
+
+## Scaffoldによる雛形作成手順
+
+```
+$ rails g scaffold Book title:string body:text
+$ rake db:migrate
+```
+
+## Rspec
+
+- テスト実行  
+`$ bundle exec rspec spec/ --format documentation`
